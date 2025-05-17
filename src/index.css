@@ -1,1 +1,9 @@
 @import "tailwindcss";
+
+/* Add your custom styles here */
+.highlight-added {
+  background-color: rgba(220, 255, 220, 0.9);
+  padding: 0.1em 0;
+  border-radius: 3px;
+  color: #0f5132;
+}
