@@ -63,6 +63,12 @@ const JobDetailPage: React.FC = () => {
     ? job.job_description.replace(applyLinkMatch[0], "")
     : job.job_description;
 
+  const handleNavigateLinkedin = () => {
+    if (job) {
+      window.location.href = job.job_url
+    }
+  }
+
   return (
     <div className="container mx-auto p-4 sm:p-6 lg:p-8 bg-gray-50 min-h-screen">
       <Link
@@ -146,6 +152,7 @@ const JobDetailPage: React.FC = () => {
             {cleanDescription}
           </ReactMarkdown>
         </div>
+        <button onClick={handleNavigateLinkedin} className="bg-blue-500 p-3 rounded text-white my-10 cursor-pointer">View Job In Linkedin</button>
       </div>
     </div>
   );

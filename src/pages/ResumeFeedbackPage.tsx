@@ -3,6 +3,7 @@ import React, { useEffect, useState } from "react";
 import { useParams, Link } from "react-router-dom";
 import {
   fetchResumeFeedbackAPI,
+  generateDisplayedMarkdown,
   type FullResumeFeedback,
 } from "../services/mockApi";
 import LoadingSpinner from "../components/LoadingSpinner";
@@ -35,6 +36,11 @@ const ResumeFeedbackPage: React.FC = () => {
     setIsLoading(true);
     fetchResumeFeedbackAPI(resumeId)
       .then((data) => {
+        localStorage.setItem(resumeId, data.resumes.original)
+        data.resumes.displayed_markdown = generateDisplayedMarkdown(
+        data.resumes.original,
+        data.resumes.improved,
+      ),
         setFeedback(data);
         setError(null);
       })

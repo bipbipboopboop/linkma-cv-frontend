@@ -14,13 +14,16 @@ const RecommendedJobsPage: React.FC = () => {
   const [error, setError] = useState<string | null>(null);
 
   useEffect(() => {
-    if (!resumeId) {
+    if (!resumeId || !localStorage.getItem(resumeId)) {
+      print()
       setError("Invalid session.");
       setIsLoading(false);
       return;
     }
     setIsLoading(true);
-    fetchRecommendedJobsAPI(resumeId)
+    // Temporary solution
+    const resume = localStorage.getItem(resumeId)!
+    fetchRecommendedJobsAPI(resume)
       .then(setJobs)
       .catch((err) => setError(err.message))
       .finally(() => setIsLoading(false));
