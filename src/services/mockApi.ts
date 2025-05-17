@@ -417,16 +417,25 @@ Seeking a versatile Full Stack Engineer to work on exciting new projects.
 export const uploadResumeAPI = (file: File): Promise<{ resumeId: string }> => {
   console.log("Simulating resume upload for:", file.name);
   return new Promise((resolve, reject) => {
-    setTimeout(() => {
-      // Simulate success/failure
-      if (Math.random() > 0.1) {
-        // 90% success rate
-        const resumeId = "12345"; // Dummy ID
-        resolve({ resumeId });
-      } else {
-        reject(new Error("Simulated upload failed. Please try again."));
+    const formData = new FormData();
+    formData.append("file", file);
+
+    fetch("https://uploadresume-fusrsyjkde.ap-southeast-3.fcapp.run", {
+      method: "POST",
+      body: formData,
+    })
+      .then((response) => {
+      if (!response.ok) {
+        throw new Error("Failed to upload resume. Please try again.");
       }
-    }, 1500); // Simulate network delay
+      return response.json();
+      })  
+      .then((data) => {
+      resolve({ resumeId: data.oss_object_key });
+      })
+      .catch((error) => {
+      reject(error);
+      });
   });
 };
 
